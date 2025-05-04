@@ -1,18 +1,19 @@
 package com.gm.csv.monitor.logger;
 
-import com.gm.csv.monitor.logger.config.Config;
+import com.gm.csv.monitor.logger.model.LogEntry;
 import com.gm.csv.monitor.logger.service.MonitorService;
-import org.junit.Before;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = LoggerApplication.class)
 class LoggerApplicationTests {
@@ -28,9 +29,9 @@ class LoggerApplicationTests {
 	}
 
 	@Test
-	void givenLogFile_whenFileContainsRows_shouldAnalyzeItSuccesfully() {
+	void givenLogFile_whenFileContainsRows_shouldReadAllRows() throws IOException {
 		File file = this.workingDir.resolve("logs_valid.log").toFile();
-		String result = service.analyze(file);
-		assertThat(result).isNotNull();
+		List<LogEntry> result = service.analyze(file);
+		assertThat(result).hasSize(7);
 	}
 }
