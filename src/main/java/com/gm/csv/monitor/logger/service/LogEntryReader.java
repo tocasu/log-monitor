@@ -34,10 +34,10 @@ public class LogEntryReader {
 
     private LogEntry toLogEntry(String[] row) {
         try {
-            LocalTime timestamp = LocalTime.parse(row[0]);
-            String description = row[1];
-            LogType type = LogType.START.toString().equals(row[2]) ? LogType.START : LogType.END;
-            Integer pid = Integer.parseInt(row[3]);
+            LocalTime timestamp = LocalTime.parse(row[0].trim());
+            String description = row[1].trim();
+            LogType type = LogType.START.toString().equals(row[2].trim()) ? LogType.START : LogType.END;
+            Integer pid = Integer.parseInt(row[3].trim());
             return new LogEntry(timestamp, description, type, pid);
         } catch (Exception e) {
             return null;
