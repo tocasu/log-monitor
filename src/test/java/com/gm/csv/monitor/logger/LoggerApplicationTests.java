@@ -41,4 +41,11 @@ class LoggerApplicationTests {
 		List<LogEntry> result = service.analyze(file);
 		assertThat(result).hasSize(5);
 	}
+
+	@Test
+	void givenLogFile_whenFileContainsEmptyRows_shouldSkipThoseRows() throws IOException {
+		File file = this.workingDir.resolve("logs_blank_rows.log").toFile();
+		List<LogEntry> result = service.analyze(file);
+		assertThat(result).hasSize(7);
+	}
 }
