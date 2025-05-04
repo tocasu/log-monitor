@@ -34,4 +34,11 @@ class LoggerApplicationTests {
 		List<LogEntry> result = service.analyze(file);
 		assertThat(result).hasSize(7);
 	}
+
+	@Test
+	void givenLogFile_whenFileContainsInvalidRows_shouldReadAllValidRows() throws IOException {
+		File file = this.workingDir.resolve("logs_invalid_rows.log").toFile();
+		List<LogEntry> result = service.analyze(file);
+		assertThat(result).hasSize(5);
+	}
 }
